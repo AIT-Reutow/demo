@@ -23,6 +23,11 @@ public class ContactController {
     private final ContactAddressService contactAddressService;
     private final ContactEmailService contactEmailService;
 
+    @PostMapping()
+    public ContactDTO add(@RequestBody ContactDTO contactDTO) {
+        return contactService.add(contactDTO);
+    }
+
     @Operation(summary = "Get all contacts", description = "Returns a list of all contacts")
     @GetMapping()
     public List<ContactDTO> getAll() {

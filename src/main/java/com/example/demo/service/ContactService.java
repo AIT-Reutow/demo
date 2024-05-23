@@ -37,11 +37,15 @@ public class ContactService {
         final var entityToUpdate = getOrThrow(id);
         entityToUpdate.setFirstName(contactDTO.firstName());
         entityToUpdate.setLastName(contactDTO.lastName());
-        return ContactDTO.toDTO(entityToUpdate);
+        return ContactDTO.toDTO(contactRepository.save(entityToUpdate));
     }
 
     public Contact getOrThrow(Long id) {
         return contactRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Contact not found"));
+    }
+
+    public ContactDTO add(ContactDTO contactDTO) {
+        return ContactDTO.toDTO(contactRepository.save(new Contact(contactDTO.firstName(), contactDTO.lastName())));
     }
 }
